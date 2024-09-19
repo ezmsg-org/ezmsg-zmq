@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ezmsg-zmq"
-version = "1.1.6"
+version = "1.1.7"
 description = "Zero-MQ pub/sub units for ezmsg"
 authors = [
   "Milsap, Griffin <griffin.milsap@gmail.com>",
