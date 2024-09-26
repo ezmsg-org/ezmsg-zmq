@@ -141,3 +141,5 @@ cython_debug/
 
 # JetBrains
 .idea/
+
+src/ezmsg/zmq/__version__.py
