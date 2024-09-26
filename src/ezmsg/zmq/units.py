@@ -66,8 +66,8 @@ class ZMQSenderUnit(ez.Unit):
 
     INPUT = ez.InputStream(ZMQMessage)
 
-    SETTINGS: ZMQSenderSettings
-    STATE: ZMQSenderState
+    SETTINGS = ZMQSenderSettings
+    STATE = ZMQSenderState
 
     def initialize(self) -> None:
         self.STATE.context = zmq.asyncio.Context()
@@ -152,8 +152,8 @@ class ZMQPollerUnit(ez.Unit):
     """
 
     OUTPUT = ez.OutputStream(ZMQMessage)
-    SETTINGS: ZMQPollerSettings
-    STATE: ZMQPollerState
+    SETTINGS = ZMQPollerSettings
+    STATE = ZMQPollerState
 
     def initialize(self) -> None:
         self.STATE.context = zmq.asyncio.Context()
