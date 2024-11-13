@@ -7,9 +7,9 @@ authors = [
 ]
 license = "MIT"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = [
-    "ezmsg>=3.5.0",
+    "ezmsg>=3.6.0",
     "pyzmq>=25.1.2",
 ]
 dynamic = ["version"]
@@ -37,4 +37,5 @@ packages = ["src/ezmsg"]
 [tool.uv]
 dev-dependencies = [
     "ruff>=0.6.7",
+    "typer>=0.13.0",
 ]
