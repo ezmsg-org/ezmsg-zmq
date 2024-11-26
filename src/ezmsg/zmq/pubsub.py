@@ -77,7 +77,7 @@ class ZMQSenderUnit(ez.Unit):
                 ):
                     break
 
-    @ez.subscriber(INPUT)
+    @ez.subscriber(INPUT, zero_copy=True)
     async def zmq_subscriber(self, message: ZMQMessage) -> None:
         while self.SETTINGS.wait_for_sub and not self.has_subscribers:
             await asyncio.sleep(STARTUP_WAIT_TIME)

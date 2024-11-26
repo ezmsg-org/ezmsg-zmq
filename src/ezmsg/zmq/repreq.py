@@ -79,7 +79,7 @@ class ZMQReq(ez.Unit):
         self.STATE.socket.close()
         self.STATE.context.term()
 
-    @ez.subscriber(INPUT)
+    @ez.subscriber(INPUT, zero_copy=True)
     @ez.publisher(OUTPUT)
     async def send_req(self, msg: ZMQMessage) -> None:
         await self.STATE.socket.send(msg.data)
