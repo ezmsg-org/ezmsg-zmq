@@ -60,3 +60,5 @@ def test_encdec_system():
     assert len(result) == 10
     cat = AxisArray.concatenate(*result, dim="time")
     assert np.array_equal(cat.data, data)
+
+    file_path.unlink(missing_ok=True)

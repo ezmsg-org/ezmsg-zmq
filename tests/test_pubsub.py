@@ -12,7 +12,7 @@ from ezmsg.util.terminate import TerminateOnTotal, TerminateOnTimeout
 from ezmsg.util.messagecodec import MessageDecoder
 
 from ezmsg.zmq.pubsub import ZMQPollerUnit, ZMQSenderUnit
-from ezmsg.zmq.util import ZMQMessage, SerializeMessage
+from ezmsg.zmq.util import SerializeMessage
 
 
 def test_poller():
