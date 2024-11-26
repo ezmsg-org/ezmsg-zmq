@@ -28,12 +28,15 @@ class ZMQSenderState(ez.State):
 
 class ZMQSenderUnit(ez.Unit):
     """
-    Represents a node in a Labgraph graph that subscribes to messages in a
-    Labgraph topic and forwards them by writing to a ZMQ socket.
+    Represents a node in an ezmsg graph that receives ZMQMessage messages on its
+     INPUT stream, then publishes each message by writing to a zmq.PUB socket.
 
     Args:
         write_addr: The address to which ZMQ data should be written.
         zmq_topic: The ZMQ topic being sent.
+        multipart: If True, use socket.send_multipart, else use socket.send.
+        wait_for_sub: If True, the sender will wait for a subscriber before publishing
+          This behaves strangely and should be set False.
     """
 
     INPUT = ez.InputStream(ZMQMessage)
