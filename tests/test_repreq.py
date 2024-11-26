@@ -22,11 +22,11 @@ def test_rep():
     comps = {
         "ZREP": ZMQRep(addr="tcp://*:" + str(port)),
         "LOGGER": MessageLogger(output=file_path),
-        "TERM": TerminateOnTotal(total=10)
+        "TERM": TerminateOnTotal(total=10),
     }
     conns = (
         (comps["ZREP"].OUTPUT, comps["LOGGER"].INPUT_MESSAGE),
-        (comps["LOGGER"].OUTPUT_MESSAGE, comps["TERM"].INPUT_MESSAGE)
+        (comps["LOGGER"].OUTPUT_MESSAGE, comps["TERM"].INPUT_MESSAGE),
     )
 
     def req_thread():
@@ -80,14 +80,14 @@ def test_req():
         "SRC": DummyReqSource(),
         "ZREQ": ZMQReq(addr="tcp://localhost:" + str(port)),
         "LOGGER": MessageLogger(output=file_path),
-        "TERM": TerminateOnTotal(total=10)
+        "TERM": TerminateOnTotal(total=10),
     }
     conns = (
         (comps["SRC"].OUTPUT, comps["ZREQ"].INPUT),
         (comps["ZREQ"].OUTPUT, comps["LOGGER"].INPUT_MESSAGE),
-        (comps["LOGGER"].OUTPUT_MESSAGE, comps["TERM"].INPUT_MESSAGE)
+        (comps["LOGGER"].OUTPUT_MESSAGE, comps["TERM"].INPUT_MESSAGE),
     )
-    
+
     def rep_thread():
         ctx = zmq.Context()
         sock = ctx.socket(zmq.REP)

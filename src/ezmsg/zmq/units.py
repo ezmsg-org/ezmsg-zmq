@@ -5,5 +5,4 @@ from .pubsub import ZMQPollerSettings as ZMQPollerSettings
 from .pubsub import ZMQSenderUnit as ZMQSenderUnit
 from .pubsub import ZMQSenderState as ZMQSenderState
 from .pubsub import ZMQSenderSettings as ZMQSenderSettings
-from .util import ZMQMessage
-from .util import ZeroCopyBytes
+from .util import ZMQMessage as ZMQMessage

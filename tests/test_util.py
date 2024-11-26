@@ -1,7 +1,6 @@
 import json
 from pathlib import Path
 import tempfile
-import typing
 
 import numpy as np
 import ezmsg.core as ez
@@ -21,9 +20,11 @@ def test_encdec():
         axes={
             "time": AxisArray.TimeAxis(fs=1000.0, offset=0.0),
             "ch": AxisArray.CoordinateAxis(np.array(["a", "b", "c", "d"]), dims=["ch"]),
-            "feat": AxisArray.CoordinateAxis(data=np.array(["f1", "f2", "f3", "f4", "f5"]), dims=["feat"]),
+            "feat": AxisArray.CoordinateAxis(
+                data=np.array(["f1", "f2", "f3", "f4", "f5"]), dims=["feat"]
+            ),
         },
-        key="test_log_object"
+        key="test_log_object",
     )
     encoded_msg = log_object(msg)
     decoded_msg = json.loads(encoded_msg, cls=MessageDecoder)["obj"]
