@@ -58,7 +58,9 @@ def test_rep():
                     #  might be in a bad state because we can't
                     #  send twice without a successful recv in between.
                     continue
+        monitor.close()
         sock.close()
+        ctx.term()
 
     _thread = threading.Thread(target=req_thread)
     _thread.daemon = True
@@ -118,6 +120,7 @@ def test_req():
                 # Remote has disconnected. Try again.
                 continue
         sock.close()
+        ctx.term()
 
     _thread = threading.Thread(target=rep_thread)
     _thread.daemon = True

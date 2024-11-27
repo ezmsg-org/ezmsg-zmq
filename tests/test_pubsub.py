@@ -44,6 +44,7 @@ def test_poller():
             state["count"] += 1
             time.sleep(0.05)
         sock.close()
+        ctx.term()
 
     _thread = threading.Thread(target=pub_thread)
     _thread.daemon = True
