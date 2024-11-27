@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 # from dataclasses import asdict
 import json
 from pickle import PickleBuffer

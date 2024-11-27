@@ -188,7 +188,7 @@ wheels = [
 
 [[package]]
 name = "ezmsg-zmq"
-version = "0.1.dev37+g990dc82.d20241127"
+version = "0.1.dev40+ge08dea7"
 source = { editable = "." }
 dependencies = [
     { name = "ezmsg" },

@@ -21,13 +21,15 @@ def test_poller():
     state = {"running": True, "count": 0}
 
     comps = {
-        "POLLER": ZMQPollerUnit(read_addr="tcp://127.0.0.1:" + str(port), zmq_topic=topic),
+        "POLLER": ZMQPollerUnit(
+            read_addr="tcp://127.0.0.1:" + str(port), zmq_topic=topic
+        ),
         "LOGGER": DebugLog(),
-        "TERM": TerminateOnTotal(total=10)
+        "TERM": TerminateOnTotal(total=10),
     }
     conns = (
         (comps["POLLER"].OUTPUT, comps["LOGGER"].INPUT),
-        (comps["LOGGER"].OUTPUT, comps["TERM"].INPUT_MESSAGE)
+        (comps["LOGGER"].OUTPUT, comps["TERM"].INPUT_MESSAGE),
     )
 
     def pub_thread():
@@ -36,15 +38,13 @@ def test_poller():
         sock.bind("tcp://*:" + str(port))
         while state["running"]:
             sock.send(
-                b"".join((
-                    bytes(topic, "UTF-8"),
-                    bytes(json.dumps(state), "UTF-8")
-                )),
+                b"".join((bytes(topic, "UTF-8"), bytes(json.dumps(state), "UTF-8"))),
                 flags=zmq.NOBLOCK,
             )
             state["count"] += 1
             time.sleep(0.05)
         sock.close()
+
     _thread = threading.Thread(target=pub_thread)
     _thread.daemon = True
     _thread.start()
@@ -67,13 +67,15 @@ def test_sender():
     comps = {
         "SRC": ArrayChunker(data=data, chunk_len=10, axis=0, fs=100.0),
         "ENCODE": SerializeMessage(),  # From Any to ZMQMessage
-        "PUB": ZMQSenderUnit(write_addr="tcp://*:" + str(port), zmq_topic=topic, wait_for_sub=True),
-        "TERM": TerminateOnTimeout(time=1.0)
+        "PUB": ZMQSenderUnit(
+            write_addr="tcp://*:" + str(port), zmq_topic=topic, wait_for_sub=True
+        ),
+        "TERM": TerminateOnTimeout(time=1.0),
     }
     conns = (
         (comps["SRC"].OUTPUT_SIGNAL, comps["ENCODE"].INPUT),
         (comps["ENCODE"].OUTPUT, comps["PUB"].INPUT),
-        (comps["SRC"].OUTPUT_SIGNAL, comps["TERM"].INPUT)
+        (comps["SRC"].OUTPUT_SIGNAL, comps["TERM"].INPUT),
     )
 
     def sub_thread(res):
@@ -88,7 +90,7 @@ def test_sender():
                 msg = sock.recv()
             except zmq.Again:
                 continue
-            payload = msg[len(topic):].decode("utf-8")
+            payload = msg[len(topic) :].decode("utf-8")
             axarr = json.loads(payload, cls=MessageDecoder)["obj"]
             res.append(axarr)
         sock.close()
