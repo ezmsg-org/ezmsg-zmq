@@ -42,9 +42,9 @@ class ZMQRep(ez.Unit):
     async def zmq_rep(self) -> None:
         while True:
             data = await self.STATE.socket.recv()
-            self.STATE.queue.put_nowait(data)
             response = self._handle_req(data)
             await self.STATE.socket.send(response)
+            self.STATE.queue.put_nowait(data)
 
     @ez.publisher(OUTPUT)
     async def send_reqs(self) -> typing.AsyncGenerator:
