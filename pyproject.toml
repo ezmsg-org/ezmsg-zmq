@@ -4,6 +4,7 @@ description = "Zero-MQ pub/sub units for ezmsg"
 authors = [
   { name = "Griffin Milsap", email = "griffin.milsap@gmail.com" },
   { name = "Preston Peranich", email = "pperanich@gmail.com" },
+  { name = "Chadwick Boulay", email = "chadwick.boulay@gmail.com" },
 ]
 license = "MIT"
 readme = "README.md"
@@ -11,6 +12,7 @@ requires-python = ">=3.9"
 dependencies = [
     "ezmsg>=3.6.0",
     "pyzmq>=25.1.2",
+    'tornado>=6.4.2; platform_system == "Windows"',
 ]
 dynamic = ["version"]
 
