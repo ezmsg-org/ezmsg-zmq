@@ -8,6 +8,7 @@ import ezmsg.core as ez
 from ezmsg.util.messagelogger import MessageLogger
 from ezmsg.util.messagecodec import message_log
 from ezmsg.util.terminate import TerminateOnTotal
+from zmq.utils.monitor import parse_monitor_message
 
 from ezmsg.zmq.repreq import ZMQRep, ZMQReq
 from ezmsg.zmq.util import ZMQMessage
@@ -15,7 +16,7 @@ from ezmsg.zmq.util import ZMQMessage
 
 def test_rep():
     port = 5557
-    state = {"running": True, "count": 0}
+    state = {"running": True, "count": 0, "connected": False}
     file_path = Path(tempfile.gettempdir())
     file_path = file_path / Path("test_rep.txt")
 
@@ -35,14 +36,28 @@ def test_rep():
         sock.setsockopt(zmq.SNDTIMEO, 500)
         sock.setsockopt(zmq.RCVTIMEO, 500)
         sock.connect("tcp://localhost:" + str(port))
+
+        monitor = sock.get_monitor_socket()
+        # It would be better to wait for a connection.
         while state["running"]:
-            try:
-                sock.send(b"Hello")
-                msg = sock.recv()
-                assert msg == b"Hello"
-            except zmq.error.Again:
-                # Remote has disconnected. Try again.
-                continue
+            if not state["connected"]:
+                monitor_result = monitor.poll(100)
+                if monitor_result:
+                    data = monitor.recv_multipart()
+                    evt = parse_monitor_message(data)
+                    if evt["event"] == zmq.EVENT_CONNECTED:
+                        state["connected"] = True
+            if state["connected"]:
+                try:
+                    sock.send(b"Hello")
+                    msg = sock.recv()
+                    assert msg == b"Hello"
+                except zmq.error.Again:
+                    # Remote has disconnected. Try again.
+                    # If this happened during `send`, then we
+                    #  might be in a bad state because we can't
+                    #  send twice without a successful recv in between.
+                    continue
         sock.close()
 
     _thread = threading.Thread(target=req_thread)
