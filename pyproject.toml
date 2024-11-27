@@ -4,6 +4,7 @@ description = "Zero-MQ pub/sub units for ezmsg"
 authors = [
   { name = "Griffin Milsap", email = "griffin.milsap@gmail.com" },
   { name = "Preston Peranich", email = "pperanich@gmail.com" },
+  { name = "Chadwick Boulay", email = "chadwick.boulay@gmail.com" },
 ]
 license = "MIT"
 readme = "README.md"
@@ -11,6 +12,7 @@ requires-python = ">=3.9"
 dependencies = [
     "ezmsg>=3.6.0",
     "pyzmq>=25.1.2",
+    'tornado>=6.4.2; platform_system == "Windows"',
 ]
 dynamic = ["version"]
 
@@ -19,6 +21,11 @@ test = [
     "flake8",
     "pytest-cov",
     "pytest>=8.3.3",
+    "numpy>=2.0.2",
+]
+dev = [
+    "ruff>=0.6.7",
+    "typer>=0.13.0",
 ]
 
 [build-system]
@@ -33,9 +40,3 @@ version-file = "src/ezmsg/zmq/__version__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ezmsg"]
-
-[tool.uv]
-dev-dependencies = [
-    "ruff>=0.6.7",
-    "typer>=0.13.0",
-]
