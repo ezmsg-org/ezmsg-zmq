@@ -1,12 +1,9 @@
 from dataclasses import dataclass
-
-# from dataclasses import asdict
 import json
 from pickle import PickleBuffer
 import typing
 
 import ezmsg.core as ez
-from ezmsg.util.messages.axisarray import AxisArray
 from ezmsg.util.messagelogger import log_object
 from ezmsg.util.messagecodec import MessageDecoder
 
@@ -80,7 +77,7 @@ class SerializeMessage(ez.Unit):
 
 class DeserializeBytes(ez.Unit):
     INPUT = ez.InputStream(bytes)
-    OUTPUT_SIGNAL = ez.OutputStream(AxisArray)
+    OUTPUT_SIGNAL = ez.OutputStream(typing.Any)
 
     @ez.subscriber(INPUT)
     @ez.publisher(OUTPUT_SIGNAL)
