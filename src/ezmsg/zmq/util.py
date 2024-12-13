@@ -63,7 +63,7 @@ class SerializeMessageSettings(ez.Settings):
 
 
 class SerializeMessage(ez.Unit):
-    SETTINGS: SerializeMessageSettings
+    SETTINGS = SerializeMessageSettings
 
     INPUT = ez.InputStream(typing.Any)
     OUTPUT = ez.OutputStream(ZMQMessage)
