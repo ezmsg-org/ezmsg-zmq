@@ -1,9 +1,10 @@
 import asyncio
 import typing
 
+import ezmsg.core as ez
+
 import zmq
 import zmq.asyncio
-import ezmsg.core as ez
 from zmq.utils.monitor import parse_monitor_message
 
 from .util import ZMQMessage
