@@ -1,11 +1,11 @@
-from dataclasses import dataclass
 import json
-from pickle import PickleBuffer
 import typing
+from dataclasses import dataclass
+from pickle import PickleBuffer
 
 import ezmsg.core as ez
-from ezmsg.util.messagelogger import log_object
 from ezmsg.util.messagecodec import MessageDecoder
+from ezmsg.util.messagelogger import log_object
 
 
 class ZeroCopyBytes(bytes):

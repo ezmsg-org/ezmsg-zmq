@@ -2,14 +2,14 @@ import json
 import threading
 import time
 
-import zmq
-import numpy as np
 import ezmsg.core as ez
+import numpy as np
+import zmq
 from ezmsg.util.debuglog import DebugLog
+from ezmsg.util.messagecodec import MessageDecoder
 from ezmsg.util.messages.axisarray import AxisArray
 from ezmsg.util.messages.chunker import ArrayChunker
-from ezmsg.util.terminate import TerminateOnTotal, TerminateOnTimeout
-from ezmsg.util.messagecodec import MessageDecoder
+from ezmsg.util.terminate import TerminateOnTimeout, TerminateOnTotal
 
 from ezmsg.zmq.pubsub import ZMQPollerUnit, ZMQSenderUnit
 from ezmsg.zmq.util import SerializeMessage
@@ -21,9 +21,7 @@ def test_poller():
     state = {"running": True, "count": 0}
 
     comps = {
-        "POLLER": ZMQPollerUnit(
-            read_addr="tcp://127.0.0.1:" + str(port), zmq_topic=topic
-        ),
+        "POLLER": ZMQPollerUnit(read_addr="tcp://127.0.0.1:" + str(port), zmq_topic=topic),
         "LOGGER": DebugLog(),
         "TERM": TerminateOnTotal(total=10),
     }
@@ -68,9 +66,7 @@ def test_sender():
     comps = {
         "SRC": ArrayChunker(data=data, chunk_len=10, axis=0, fs=100.0),
         "ENCODE": SerializeMessage(),  # From Any to ZMQMessage
-        "PUB": ZMQSenderUnit(
-            write_addr="tcp://*:" + str(port), zmq_topic=topic, wait_for_sub=True
-        ),
+        "PUB": ZMQSenderUnit(write_addr="tcp://*:" + str(port), zmq_topic=topic, wait_for_sub=True),
         "TERM": TerminateOnTimeout(time=1.0),
     }
     conns = (

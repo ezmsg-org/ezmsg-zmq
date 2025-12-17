@@ -1,16 +1,16 @@
 import json
-from pathlib import Path
 import tempfile
+from pathlib import Path
 
-import numpy as np
 import ezmsg.core as ez
-from ezmsg.util.messages.axisarray import AxisArray
-from ezmsg.util.messagelogger import log_object, MessageLogger
+import numpy as np
 from ezmsg.util.messagecodec import MessageDecoder, message_log
+from ezmsg.util.messagelogger import MessageLogger, log_object
+from ezmsg.util.messages.axisarray import AxisArray
 from ezmsg.util.messages.chunker import ArrayChunker
 from ezmsg.util.terminate import TerminateOnTotal
 
-from ezmsg.zmq.util import SerializeMessage, DeserializeBytes
+from ezmsg.zmq.util import DeserializeBytes, SerializeMessage
 
 
 def test_encdec():
@@ -20,9 +20,7 @@ def test_encdec():
         axes={
             "time": AxisArray.TimeAxis(fs=1000.0, offset=0.0),
             "ch": AxisArray.CoordinateAxis(np.array(["a", "b", "c", "d"]), dims=["ch"]),
-            "feat": AxisArray.CoordinateAxis(
-                data=np.array(["f1", "f2", "f3", "f4", "f5"]), dims=["feat"]
-            ),
+            "feat": AxisArray.CoordinateAxis(data=np.array(["f1", "f2", "f3", "f4", "f5"]), dims=["feat"]),
         },
         key="test_log_object",
     )

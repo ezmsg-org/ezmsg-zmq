@@ -1,12 +1,12 @@
 import asyncio
-from pathlib import Path
 import tempfile
 import threading
+from pathlib import Path
 
-import zmq
 import ezmsg.core as ez
-from ezmsg.util.messagelogger import MessageLogger
+import zmq
 from ezmsg.util.messagecodec import message_log
+from ezmsg.util.messagelogger import MessageLogger
 from ezmsg.util.terminate import TerminateOnTotal
 from zmq.utils.monitor import parse_monitor_message
 

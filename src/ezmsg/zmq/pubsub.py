@@ -1,13 +1,13 @@
 import asyncio
 from typing import AsyncGenerator
 
+import ezmsg.core as ez
+
 import zmq
 import zmq.asyncio
 from zmq.utils.monitor import parse_monitor_message
-import ezmsg.core as ez
 
 from .util import ZMQMessage
-
 
 POLL_TIME = 0.1
 STARTUP_WAIT_TIME = 0.1
@@ -183,9 +183,7 @@ class ZMQPollerUnit(ez.Unit):
                 await asyncio.sleep(POLL_TIME)
 
             if self.socket_open:
-                poll_result = await self.STATE.socket.poll(
-                    self.SETTINGS.poll_time * 1000, zmq.POLLIN
-                )
+                poll_result = await self.STATE.socket.poll(self.SETTINGS.poll_time * 1000, zmq.POLLIN)
                 if poll_result:
                     if self.SETTINGS.multipart is True:
                         _, data = await self.STATE.socket.recv_multipart()
