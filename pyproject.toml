@@ -16,6 +16,16 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+
+[project.entry-points."ezmsg.components"]
+"zmq.DeserializeBytes" = "ezmsg.zmq.util:DeserializeBytes"
+"zmq.SerializeMessage" = "ezmsg.zmq.util:SerializeMessage"
+"zmq.ZMQPollerUnit" = "ezmsg.zmq.pubsub:ZMQPollerUnit"
+"zmq.ZMQRep" = "ezmsg.zmq.repreq:ZMQRep"
+"zmq.ZMQReq" = "ezmsg.zmq.repreq:ZMQReq"
+"zmq.ZMQSenderUnit" = "ezmsg.zmq.pubsub:ZMQSenderUnit"
+
+
 [dependency-groups]
 dev = [
     {include-group = "lint"},
