@@ -10,7 +10,7 @@ license = "MIT"
 readme = "README.md"
 requires-python = ">=3.10.15"
 dependencies = [
-    "ezmsg>=3.6.0",
+    "ezmsg>=3.10.0b4",
     "pyzmq>=25.1.2",
     'tornado>=6.4.2; platform_system == "Windows"',
 ]
